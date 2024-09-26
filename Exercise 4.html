@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="Junnan Zhao">
+    <title>Exercise 4</title>
+    <script src="randominteger.js"></script>
+</head>
+
+<body>
+    <h1>number guessing game</h1>
+    <p>guessing a simple number between 1 and 100. Challenge yourself with this game</p>
+    <input type="number" id="guessInput" placeholder="Enter your guess">
+    <button onclick="checkGuess()">Guess</button>
+    <p id="message"></p>
+    <button id="playAgainButton" style="display:none;">Play Again</button>
+    <script>
+        var secretNumber = randomInt(1, 100);
+        var guessCount = 0;
+        var maxGuesses = 10;
+
+        function checkGuess() {
+            var userGuess = parseInt(document.getElementById('guessInput').value, 10);
+            guessCount += 1;
+            var message = '';
+
+            if (userGuess === secretNumber) {
+                message = 'Congratulations! You guessed the number!';
+                document.getElementById('message').innerText = message;
+                document.getElementById('playAgainButton').style.display = 'block'; // Show the "Play Again" button
+            } else if (guessCount === maxGuesses) {
+                message = 'Game over! You have used all your guesses. The number was ' + secretNumber + '.';
+                document.getElementById('message').innerText = message;
+                document.getElementById('playAgainButton').style.display = 'block'; // Show the "Play Again" button
+            } else if (userGuess < secretNumber) {
+                message = 'Your guess is too low.';
+            } else if (userGuess > secretNumber) {
+                message = 'Your guess is too high.';
+            }
+
+            document.getElementById('message').innerText = message;
+        }
+
+        function resetGame() {
+            secretNumber = randomInt(1, 100);
+            guessCount = 0;
+            document.getElementById('message').innerText = '';
+            document.getElementById('guessInput').value = '';
+            document.getElementById('guessInput').placeholder = 'Enter your guess';
+            document.getElementById('playAgainButton').style.display = 'none';
+            document.getElementById('guessInput').focus();
+        }
+
+        document.getElementById('playAgainButton').onclick = resetGame;
+    </script>
+</body>
+
+</html>
